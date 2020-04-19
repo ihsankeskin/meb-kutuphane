@@ -1,0 +1,71 @@
+body {
+  margin: 0;
+  font-family: Helvetica;
+}
+
+.section {
+  width: 100vw;
+  height: 100vh;
+}
+
+.text-ctn {
+  margin: 18px;
+}
+
+.marquee {
+  width: 360px;
+  border-bottom: 3px solid #000000;
+  background-color: #000000;
+  white-space: nowrap;
+}
+
+.marquee-text {
+  display: inline-block;
+  width: 260px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #ff0000;
+  animation: scroll 3s linear infinite;
+}
+
+.marquee-text:before {
+  content: "ERİŞİM REDDEDİLDİ";
+}
+
+@keyframes scroll {
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+#sec-1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ff0000;
+}
+
+#ctn {
+  margin-top: 40px;
+  width: 360px;
+  height: 380px;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  overflow: hidden;
+}
+
+#forbidden {
+  display: inline-block;
+  padding: 5px 10px 5px 10px;
+  border: 2px solid #000000;
+  border-radius: 8px;
+  font-size: 50px;
+  animation: flash 1s linear infinite;
+}
+
+@keyframes flash {
+  50% {
+    opacity: 0;
+  }
+}
