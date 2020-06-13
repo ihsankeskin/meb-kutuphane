@@ -2,20 +2,49 @@
 
   if(isset($_POST['submit'])){
     //form post edildi
-    $kullanici_adi  = strip_tags ( htmlspecialchars(trim($_POST['kullanici_adi'])));
-    $sifre          = strip_tags ( htmlspecialchars(trim($_POST['sifre'])));
+    $k_adi_sifrele  = strip_tags ( htmlspecialchars(trim($_POST['kullanici_adi'])));
+    $metinsifre    = strip_tags ( htmlspecialchars(trim($_POST['sifre'])));
+
+
+      $sifrelendi = openssl_encrypt($metinsifre,$encrypt_method, $key, false, $iv);
+      $kullanici_adi = openssl_encrypt($k_adi_sifrele,$encrypt_method, $key, false, $iv);
+
+    //chapta
+/*
+function postCaptcha($response){
+    $fieldsArray = array(
+      'secret'    => '6LdhlPEUAAAAAB_PJ7KmrbjwutVwQ0ZfaOTZON_q',
+      'response'    => $response
+    );
+    $postFields = http_build_query($fieldsArray);
+    $ch =     curl_init();
+          curl_setopt($ch, CURLOPT_URL, 'https://www.google.com/recaptcha/api/siteverify');
+          curl_setopt($ch, CURLOPT_POST, count($fieldsArray));
+          curl_setopt($ch, CURLOPT_POSTFIELDS, $postFields);
+          curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $result =   curl_exec($ch);
+          curl_close($ch);
+    return json_decode($result,true);
+  }
+  if($_POST):
+    $result = postCaptcha($_POST['g-recaptcha-response']);
+    if ($result['success']):
+      $hata = 'Doğrulama tamamlandı....';
+     //chapta
+*/
 
     //veritabanından username password u çek eğer uyuyorsa girilenlerle
     $sorgu = $db -> prepare(' SELECT * FROM yoneticiler 
       WHERE username = ? AND sifre = ? ');
-    $sorgu -> execute( [$kullanici_adi,$sifre] );
+    $sorgu -> execute( [$kullanici_adi,$sifrelendi] );
     $yoneticiler = $sorgu->fetch();
 
     if(!$yoneticiler){
       $hata = 'kullanıcı adı veya şifre hatalı...';
     }else{
-
-      $_SESSION['kullanici_adi'] = $yoneticiler['username'];
+      $k_adim = $yoneticiler['username'];
+      
+      $_SESSION['kullanici_adi'] = openssl_decrypt($k_adim,$encrypt_method, $key, false, $iv);
       // doğru username pass girildiyse username ile session oluştur
 
       $_SESSION['yetki'] = $yoneticiler['yetki'];
@@ -29,11 +58,17 @@
       // 3 --> ogretmen
       header('Location:index.php');
     }
+/*
+    else:
+      $hata = 'Lütfen insan olduğunuzu doğrulayın.<br> Hata Kodu: '.$result['error-codes'][0];
+    endif;
+  endif;
+  */
   }
 
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 
 <head>
 
@@ -80,6 +115,13 @@
                     <div class="form-group">
                       <input type="password"  required class="form-control form-control-user" id="exampleInputPassword" placeholder="Şifreniz" name="sifre">
                     </div>
+
+                    <!--chapta-->
+                  <div class="form-group">
+                    <div class="g-recaptcha" data-sitekey="6LdhlPEUAAAAACBxL_UgLTG06rPGMbitgQyhBR2N"></div>
+                  </div>
+                    <!--chapta-->
+
                     <input type="hidden" name="submit" value="1">
                     <input type="submit" value="Giriş Yap" class="btn btn-primary btn-user btn-block">
                   </form>
@@ -119,6 +161,7 @@
 
   <!-- Custom scripts for all pages-->
   <script src="../js/sb-admin-2.min.js"></script>
+  <script src='https://www.google.com/recaptcha/api.js?hl=tr'></script>
 
 </body>
 

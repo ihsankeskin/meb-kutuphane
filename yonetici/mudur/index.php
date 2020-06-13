@@ -101,6 +101,20 @@ if($_SESSION['kullanici_adi']){
 			require_once 'sayfalar/tek-kategori-sil.php';
 			#kategori güncelleme sayfası
 		break;
+		case 'profil':
+			require_once 'sayfalar/profil.php';
+		break;
+		case 'rapor_kutuphane':
+			require_once 'sayfalar/rapor_kutuphane.php';
+		break;
+		case 'kullanici_rapor':
+			require_once 'sayfalar/rapor_kullanici.php';
+		break;
+		case 'kitap_rapor':
+			require_once 'sayfalar/rapor_kitap.php';
+		break;
+
+
 
 		default:
 			# code...

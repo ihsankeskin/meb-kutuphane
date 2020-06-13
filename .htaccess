@@ -1,0 +1,14 @@
+RewriteEngine On
+RewriteBase /
+ErrorDocument 403 /kutuphane/403.php
+ErrorDocument 404 /kutuphane/404.php
+
+<IfModule mod_rewrite.c>
+RewriteEngine on
+RewriteCond %{HTTP_REFERER} !^$
+RewriteCond %{HTTP_REFERER} !^http://([-a-z0-9]+\.)?siteniz\.com[NC]
+RewriteRule .*\.(zip|mp3|avi|wmv|mpg|mpeg)$ http://proje.cf/403.php [R,NC,L]
+</ifModule>
+
+# Make PHP code look like unknown types
+AddType application/x-httpd-php .133t

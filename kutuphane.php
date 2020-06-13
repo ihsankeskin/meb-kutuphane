@@ -13,7 +13,7 @@ $kitaplar = $sorgu -> fetchAll(PDO :: FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 
 <head>
 
@@ -112,6 +112,10 @@ $kitaplar = $sorgu -> fetchAll(PDO :: FETCH_ASSOC);
                 <a class="dropdown-item" href="ogrenci/">
                   <i class="fas fa-users fa-sm fa-fw mr-2 text-gray-500"></i>
                   Öğrenci Girişi
+                </a>                
+                <a class="dropdown-item" href="yonetici/">
+                  <i class="fas fa-users fa-sm fa-fw mr-2 text-gray-500"></i>
+                  Yönetici Girişi
                 </a>
               </div>
             </li>

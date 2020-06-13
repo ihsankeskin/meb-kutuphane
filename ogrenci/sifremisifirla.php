@@ -7,14 +7,11 @@
  */
 
 require_once '../baglan.php';
-
-
 $kod = trim($_GET['kod']);
 if(!$kod){
     $hata = 'Sıfırlama Kodu Hatalı Girildi...';
 
 }else{
-
     if($_POST){
         $eposta =trim($_POST['email']);
         $sifre =trim($_POST['sifre']);
@@ -22,22 +19,40 @@ if(!$kod){
 
         if(!$eposta || !$sifre || !$sifre2){
             $hata = 'Boş Alan Bırakmayınız...';
-
         }else{
 
             if($sifre != $sifre2){
                 $hata = 'Şifreler Uyuşmuyor...';
-
             }else {
+                 //chapta
+          function postCaptcha($response){
+           $fieldsArray = array(
+                'secret'    => '6LdhlPEUAAAAAB_PJ7KmrbjwutVwQ0ZfaOTZON_q',
+                 'response'    => $response
+          );
+          $postFields = http_build_query($fieldsArray);
+            $ch =     curl_init();
+          curl_setopt($ch, CURLOPT_URL, 'https://www.google.com/recaptcha/api/siteverify');
+          curl_setopt($ch, CURLOPT_POST, count($fieldsArray));
+          curl_setopt($ch, CURLOPT_POSTFIELDS, $postFields);
+          curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+         $result =   curl_exec($ch);
+                   curl_close($ch);
+         return json_decode($result,true);
+                }
+        if($_POST):
+           $result = postCaptcha($_POST['g-recaptcha-response']);
+           if ($result['success']):
+           $hata = 'Doğrulama tamamlandı....';
+                //chapta
+                $seposta = openssl_encrypt($eposta,$encrypt_method, $key, false, $iv);
 
                 $varmi = $db->prepare("SELECT *FROM ogrenciler WHERE sifirlama_kodu=:k AND eposta=:e");
-                $varmi->execute ([':k' =>$kod, ':e'=>$eposta]);
+                $varmi->execute ([':k' =>$kod, ':e'=>$seposta]);
                 if($varmi->rowCount()){
-
-
-
+                  $s_sifre = openssl_encrypt($sifre,$encrypt_method, $key, false, $iv);
                     $sifreguncelle = $db->prepare( "UPDATE ogrenciler SET sifirlama_kodu=:sifirla , sifre=:s WHERE sifirlama_kodu=:k AND eposta=:e");
-                    $sifreguncelle->execute([':sifirla'=>"",':s'=>$sifre,':k'=>$kod,':e'=>$eposta]);
+                    $sifreguncelle->execute([':sifirla'=>"",':s'=>$s_sifre,':k'=>$kod,':e'=>$seposta]);
                     if($sifreguncelle){
                         $hata = 'Şifreniz başarıyla güncellendi...';
 
@@ -51,10 +66,15 @@ if(!$kod){
                     $hata = 'Girilen bilgilere göre bir kayıt bulunamadı...';
 
                 }
+               else:
+                 $hata = 'Lütfen insan olduğunuzu doğrulayın.<br> Hata Kodu: '.$result['error-codes'][0];
+              endif;
+              endif;
             }
 
         }
     }
+
 }
 
 
@@ -62,7 +82,7 @@ if(!$kod){
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 
 <head>
 
@@ -117,6 +137,11 @@ if(!$kod){
                                     <div class="form-group">
                                         <input type="password"   required class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Tekrar Şifrenizi Giriniz ..." name="sifre2">
                                     </div>
+                                          <!--chapta-->
+                                     <div class="form-group">
+                                         <div class="g-recaptcha" data-sitekey="6LdhlPEUAAAAACBxL_UgLTG06rPGMbitgQyhBR2N"></div>
+                                    </div>
+                                          <!--chapta-->
                                     <input type="hidden" name="submit" value="1">
                                     <input type="submit" value="Şifremi Sıfırla" class="btn btn-primary btn-user btn-block">
 
@@ -160,6 +185,7 @@ if(!$kod){
 
 <!-- Custom scripts for all pages-->
 <script src="../js/sb-admin-2.min.js"></script>
+<script src='https://www.google.com/recaptcha/api.js?hl=tr'></script>
 
 </body>
 

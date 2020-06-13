@@ -16,13 +16,13 @@ $sorgu = $db -> prepare('
 	ogrenciler.telefon 		as o_telefon,
 	ogrenciler.birim_id 	as o_birim_id,
 	birimler.birimadi 		as o_birim_ad,
-  zaman.last_time       as z_last_time,
-  zaman.id              as z_id
+    zaman.last_time       as z_last_time,
+    zaman.id              as z_id
 
 	FROM kitaplar
 	INNER JOIN ogrenciler 	ON kitaplar.odunc_durum_ogrenci_id = ogrenciler.id
 	INNER JOIN birimler 	  ON ogrenciler.birim_id = birimler.id
-  INNER JOIN zaman        ON kitaplar.id = zaman.kitap_ID 
+    INNER JOIN zaman        ON kitaplar.id = zaman.kitap_ID 
 	
 	WHERE kitaplar.odunc_durum = ? AND kitaplar.birim_id = ?
 ');
@@ -55,7 +55,7 @@ $onaylanmis_kitaplar = $sorgu -> fetchAll(PDO :: FETCH_ASSOC);
                       <th>Yayın Evi</th>                   
           					  <th>Öğrenci Ad</th>
           					  <th>Öğrenci Soyad</th>
-          					  <th>Tc No</th>
+          					  <th>Ögrenci No</th>
           					  <th>Telefon</th>
           					  <th>Birim Adı</th>
           					  <th>Süre</th>                                        
@@ -68,7 +68,7 @@ $onaylanmis_kitaplar = $sorgu -> fetchAll(PDO :: FETCH_ASSOC);
                       <th>Yayın Evi</th>                   
           					  <th>Öğrenci Ad</th>
           					  <th>Öğrenci Soyad</th>
-          					  <th>Tc No</th>
+          					  <th>Ögrenci No</th>
           					  <th>Telefon</th>
           					  <th>Birim Adı</th>
           					  <th>Süre</th>                                
@@ -80,8 +80,8 @@ $onaylanmis_kitaplar = $sorgu -> fetchAll(PDO :: FETCH_ASSOC);
                       <td> <?= $kitap['k_ISBN_no'];   ?> 		</td>
                       <td> <?= $kitap['k_ad'];        ?>    </td>
                       <td> <?= $kitap['k_yayin_evi']; ?> 	  </td>
-                      <td> <?= $kitap['o_ad'];        ?> 		</td>
-                      <td> <?= $kitap['o_soyad'];     ?> 		</td>
+                      <td>  <?php $sifrem= $kitap['o_ad']; echo $sifre_cozuldu = openssl_decrypt($sifrem,$encrypt_method, $key, false, $iv); ?> </td>
+                      <td> <?php $sifrem= $kitap['o_soyad']; echo $sifre_cozuldu = openssl_decrypt($sifrem,$encrypt_method, $key, false, $iv); ?></td>
                       <td> <?= $kitap['o_tc'];        ?> 		</td>
                       <td> <?= $kitap['o_telefon'];   ?> 		</td>
                       <td> <?= $kitap['o_birim_ad'];  ?> 	  </td>

@@ -119,18 +119,18 @@
                     
                     <?php foreach ($mudurler as $mudur): ?>
                     <tr>
-                      <td><?php echo $mudur['ad']; ?></td>
-                      <td><?php echo $mudur['soyad']; ?></td>
+                      <td><?php $adsifrem= $mudur['ad']; echo $sifre_cozuldu = openssl_decrypt($adsifrem,$encrypt_method, $key, false, $iv); ?></td>
+                      <td><?php $adsifrem= $mudur['soyad']; echo $sifre_cozuldu = openssl_decrypt($adsifrem,$encrypt_method, $key, false, $iv); ?></td>
                       <td><?php echo $mudur['tcno']; ?></td>
-                      <td><?php echo $mudur['username']; ?></td>
+                      <td><?php $adsifrem= $mudur['username']; echo $sifre_cozuldu = openssl_decrypt($adsifrem,$encrypt_method, $key, false, $iv); ?></td>
                       <td title="<?php echo $mudur['sifre']; ?>">
                         <details>
                           <summary></summary>
-                          <?php echo $mudur['sifre']; ?>
+                          <?php $adsifrem= $mudur['sifre']; echo $sifre_cozuldu = openssl_decrypt($adsifrem,$encrypt_method, $key, false, $iv); ?>
                         </details>
                       </td>
                       <td><?php echo $mudur['telefon']; ?></td>
-                      <td><?php echo $mudur['eposta']; ?></td>
+                      <td><?php $adsifrem= $mudur['eposta']; echo $sifre_cozuldu = openssl_decrypt($adsifrem,$encrypt_method, $key, false, $iv); ?></td>
                       <td><?php echo $mudur['birimadi']; ?></td>  
                       <td>
                         <a href="index.php?sayfa=tek-ogr-guncelle&id=<?php echo $mudur['yoneticiID']; ?>">

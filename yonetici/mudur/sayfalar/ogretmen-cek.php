@@ -74,19 +74,20 @@ $ogretmenler = $sorgu -> fetchAll(PDO :: FETCH_ASSOC);
 
                     <?php foreach($ogretmenler as $ogretmen): ?>
 
+
                     <tr>
-                      <td> <?php echo $ogretmen['ad'];        ?> </td>
-                      <td> <?php echo $ogretmen['soyad'];     ?> </td>
+                      <td> <?php $sifrem= $ogretmen['ad']; echo $sifre_cozuldu = openssl_decrypt($sifrem,$encrypt_method, $key, false, $iv); ?></td>
+                      <td> <?php $sifrem= $ogretmen['soyad']; echo $sifre_cozuldu = openssl_decrypt($sifrem,$encrypt_method, $key, false, $iv); ?> </td>
                       <td> <?php echo $ogretmen['tcno'];      ?> </td>
-                      <td> <?php echo $ogretmen['username'];  ?> </td>
+                      <td> <?php $sifrem= $ogretmen['username']; echo $sifre_cozuldu = openssl_decrypt($sifrem,$encrypt_method, $key, false, $iv); ?> </td>
                       <td>
                         <details>
                           <summary></summary>
-                          <?php echo $ogretmen['sifre']; ?> 
+                          <?php $sifrem= $ogretmen['sifre']; echo $sifre_cozuldu = openssl_decrypt($sifrem,$encrypt_method, $key, false, $iv); ?> 
                         </details>
                       </td>
                       <td> <?php echo $ogretmen['telefon'];   ?> </td>
-                      <td> <?php echo $ogretmen['eposta'];    ?> </td>
+                      <td> <?php $sifrem= $ogretmen['eposta']; echo $sifre_cozuldu = openssl_decrypt($sifrem,$encrypt_method, $key, false, $iv); ?></td>
                     </tr>
 
                     <?php endforeach; ?>

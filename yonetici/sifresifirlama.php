@@ -11,6 +11,33 @@ use PHPMailer\PHPMailer\Exception;
 
    if($_POST){
            $eposta=trim($_POST['eposta']);
+
+
+      $seposta = openssl_encrypt($eposta,$encrypt_method, $key, false, $iv);
+
+
+                //chapta
+          function postCaptcha($response){
+           $fieldsArray = array(
+                'secret'    => '6LdhlPEUAAAAAB_PJ7KmrbjwutVwQ0ZfaOTZON_q',
+                 'response'    => $response
+          );
+          $postFields = http_build_query($fieldsArray);
+            $ch =     curl_init();
+          curl_setopt($ch, CURLOPT_URL, 'https://www.google.com/recaptcha/api/siteverify');
+          curl_setopt($ch, CURLOPT_POST, count($fieldsArray));
+          curl_setopt($ch, CURLOPT_POSTFIELDS, $postFields);
+          curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+         $result =   curl_exec($ch);
+                   curl_close($ch);
+         return json_decode($result,true);
+                }
+        if($_POST):
+           $result = postCaptcha($_POST['g-recaptcha-response']);
+           if ($result['success']):
+           $hata = 'Doğrulama tamamlandı....';
+                //chapta
+
            if(!$eposta) {
                $hata = 'boş alan bırakmayın...';
            }else{
@@ -20,18 +47,16 @@ use PHPMailer\PHPMailer\Exception;
                }else{
 
                    $varmi = $db->prepare("SELECT ad,soyad,eposta FROM yoneticiler WHERE eposta=:e");
-                   $varmi->execute([':e'=>$eposta]);
+                   $varmi->execute([':e'=>$seposta]);
 
                    if ($varmi->rowCount()){
 
                        $row =$varmi->fetch (PDO::FETCH_ASSOC);
                        $sifirlamakodu=uniqid("kutuphane_");
-                       $sifirlamlinki="http://localhost/kutuphane/yonetici/sifremisifirla.php?kod=".$sifirlamakodu;
+                       $sifirlamlinki="http://kutuphane.ihsankeskin.org/yonetici/sifremisifirla.php?kod=".$sifirlamakodu;
 
                        $sifirlamakodunuekle = $db->prepare("UPDATE yoneticiler set sifirlama_kodu=:k WHERE eposta=:e" );
-                       $sifirlamakodunuekle ->execute([':k'=>$sifirlamakodu,':e' => $eposta]);
-
-
+                       $sifirlamakodunuekle ->execute([':k'=>$sifirlamakodu,':e' => $seposta]);
 
                        $mail=new PHPMailer();
                        try {
@@ -55,11 +80,11 @@ use PHPMailer\PHPMailer\Exception;
                            $mail->addAddress($eposta,);               // Name is optional
                            $mail->addReplyTo('hello@ihsankeskin.org', 'noreply');
 
-
-
+                           $ad_cozuldu = openssl_decrypt($row['ad'],$encrypt_method, $key, false, $iv);
+                           $soyad_cozuldu = openssl_decrypt($row['soyad'],$encrypt_method, $key, false, $iv);
 
                            $mail->isHTML(true);                                  // Set email format to HTML
-                           $mail->Body = " <div style='font-size:20px'>Sayın : ".$row['ad']." ".$row['soyad']." şifre sıfırlama linkiniz : ".$sifirlamlinki." Mailde hata oldugunu düşünüyorsanız lütfen sistem yöneticisi ile iletişime geçiniz</div>";
+                           $mail->Body = " <div style='font-size:20px'>Sayın : ".$ad_cozuldu." ".$soyad_cozuldu." şifre sıfırlama linkiniz : ".$sifirlamlinki." mailde hata oldugunu düşünüyorsanız lütfen sistem yöneticisi ile iletişime geçiniz</div>";
 
                            $mail->send();
                            $hata = 'şifre sıfırlama linkiniz belirtmiş oldugunuz mail adresine gönderilmiştir...';
@@ -69,21 +94,23 @@ use PHPMailer\PHPMailer\Exception;
 
                        }
 
-
-                   }else{
+                      }else{
                        $hata = 'girilen eposta adresi sistemde mevcut degildir';
 
                    }
                }
 
-}
-
+          }
+              else:
+                 $hata = 'Lütfen insan olduğunuzu doğrulayın.<br> Hata Kodu: '.$result['error-codes'][0];
+              endif;
+              endif;
    }
 
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 
 <head>
 
@@ -132,6 +159,11 @@ use PHPMailer\PHPMailer\Exception;
                                     <div class="form-group">
                                         <input type="email"   required class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Mail Adresinizi Giriniz Giriniz ..." name="eposta">
                                     </div>
+                                              <!--chapta-->
+                                   <div class="form-group">
+                                      <div class="g-recaptcha" data-sitekey="6LdhlPEUAAAAACBxL_UgLTG06rPGMbitgQyhBR2N"></div>
+                                   </div>
+                                              <!--chapta-->
                                     <input type="hidden" name="submit" value="1">
                                     <input type="submit" value="Şifremi Sıfırla" class="btn btn-primary btn-user btn-block">
 
@@ -172,6 +204,7 @@ use PHPMailer\PHPMailer\Exception;
 
 <!-- Custom scripts for all pages-->
 <script src="../js/sb-admin-2.min.js"></script>
+  <script src='https://www.google.com/recaptcha/api.js?hl=tr'></script>
 
 </body>
 

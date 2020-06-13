@@ -1,6 +1,7 @@
 	
 
       <!-- Footer -->
+      <div id=footer >
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
@@ -8,6 +9,7 @@
        </div>
         </div>
       </footer>
+      </div>
       <!-- End of Footer -->
 
     </div>
@@ -47,6 +49,7 @@
 
   <!-- Page level custom scripts -->
   <script src="../../js/demo/datatables-demo.js"></script>
+  <script src="../../js/demo/chart-bar-demo.js"></script>
 
 </body>
 

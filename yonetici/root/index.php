@@ -83,6 +83,22 @@ if($_SESSION['kullanici_adi']){
 			require_once 'sayfalar/tek-birim-sil.php';
 			#birim silme sayfası
 		break;	
+		case 'profil':
+			require_once 'sayfalar/profil.php';
+		break;
+
+		case 'kutuphane_rapor':
+			require_once 'sayfalar/kutuphane_rapor.php';
+		break;
+		
+		case 'birim_rapor':
+			require_once 'sayfalar/birim_rapor.php';
+		break;
+		
+		case 'sistem_rapor':
+			require_once 'sayfalar/sistem_rapor.php';
+		break;
+		
 		
 		default:
 			# code...

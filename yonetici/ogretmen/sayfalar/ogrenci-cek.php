@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $birim_id = $_SESSION["birim_id"];
 
@@ -54,42 +54,47 @@ $ogrenciler = $sorgu -> fetchAll(PDO :: FETCH_ASSOC);
                     <tr class="table-active">
                       <th>İsim</th>
                       <th>Soyisim</th>
-                      <th>Tc No</th>                      
+                      <th>Ögrenci No</th>
                       <th>Şifre</th>
                       <th>Telefon</th>
                       <th>Eposta</th>
+                      <th>Ödünç Geçmişi</th>
                     </tr>
                   </thead>
                   <tfoot>
                      <tr class="table-active">
                       <th>İsim</th>
                       <th>Soyisim</th>
-                      <th>Tc No</th>                      
+                      <th>Ögrenci No</th>
                       <th>Şifre</th>
                       <th>Telefon</th>
                       <th>Eposta</th>
+                      <th>Ödünç Geçmişi</th>
                     </tr>
                   </tfoot>
                   <tbody>
-
-                    <?php foreach($ogrenciler as $ogrenci): ?>
-
+                    <?php foreach ($ogrenciler as $ogrenci): ?>
                     <tr>
-                      <td> <?php echo $ogrenci['ad'];       ?> </td>
-                      <td> <?php echo $ogrenci['soyad'];    ?> </td>
+                      <td> <?php $sifrem= $ogrenci['ad']; echo $sifre_cozuldu = openssl_decrypt($sifrem,$encrypt_method, $key, false, $iv); ?> </td>
+                      <td> <?php $sifrem= $ogrenci['soyad']; echo $sifre_cozuldu = openssl_decrypt($sifrem,$encrypt_method, $key, false, $iv); ?> </td>
                       <td> <?php echo $ogrenci['tcno'];     ?> </td>
-                      <td> 
+                      <td>
                         <details>
                           <summary></summary>
-                          <?php echo $ogrenci['sifre'];       ?>
+                          <?php $sifrem= $ogrenci['sifre']; echo $sifre_cozuldu = openssl_decrypt($sifrem,$encrypt_method, $key, false, $iv); ?>
                         </details>
                       </td>
                       <td> <?php echo $ogrenci['telefon'];	?> </td>
-                      <td> <?php echo $ogrenci['eposta'];   ?> </td>                      
+                      <td> <?php $sifrem= $ogrenci['eposta']; echo $sifre_cozuldu = openssl_decrypt($sifrem,$encrypt_method, $key, false, $iv); ?></td>
+                     <td>
+                       <a href="index.php?sayfa=tek-ogrenci-goruntule&k_id=<?= $ogrenci['id']; ?>">
+                          <button type="button" class="btn btn-primary">
+                            Görüntüle
+                          </button>
+                        </a> 
+                      </td>  
                     </tr>
-
-                    <?php endforeach; ?>
-                             
+                      <?php endforeach; ?>
                   </tbody>
                 </table>
               </div>
@@ -98,3 +103,4 @@ $ogrenciler = $sorgu -> fetchAll(PDO :: FETCH_ASSOC);
     <!-- /data table -->
 </div>
 <!-- end container-fluid -->
+

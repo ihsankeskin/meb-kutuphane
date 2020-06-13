@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $sorgu = $db -> prepare('
 	SELECT 
@@ -64,9 +64,10 @@ $kitaplar = $sorgu -> fetchAll(PDO :: FETCH_ASSOC);
                       <th>Kitap Adı</th>
                       <th>Kategori</th>
                       <th>Yayın Evi</th>
-                      <th>Basım Yılı</th>  
+                      <th>Basım Yılı</th>
                       <th>Ödünç Durumu</th>
-                      <th>Yazar</th>                                         
+                      <th>Yazar</th>
+                      <th>Ödünç Geçmişi</th>
                     </tr>
                   </thead>
                   <tfoot>
@@ -75,9 +76,10 @@ $kitaplar = $sorgu -> fetchAll(PDO :: FETCH_ASSOC);
                       <th>Kitap Adı</th>
                       <th>Kategori</th>
                       <th>Yayın Evi</th>
-                      <th>Basım Yılı</th>  
+                      <th>Basım Yılı</th>
                       <th>Ödünç Durumu</th>
-                      <th>Yazar</th>                                      
+                      <th>Yazar</th>
+                      <th>Ödünç Geçmişi</th>
                     </tr>
                   </tfoot>
                   <tbody>
@@ -89,7 +91,14 @@ $kitaplar = $sorgu -> fetchAll(PDO :: FETCH_ASSOC);
                       <td><?= $kitap['kitap_yayin_evi']; ?></td>
                       <td><?= $kitap['kitap_yil']; ?></td>
                       <td><?= $kitap['kitap_odunc_durum'] == '0' ? 'BOŞ' : 'Ödünç Alınmış..'   ?></td>
-                      <td><?= $kitap['yazar_ad_soyad']; ?></td>                      
+                      <td><?= $kitap['yazar_ad_soyad']; ?></td>
+                      <td>
+                       <a href="index.php?sayfa=tek-kitap-goruntule&k_id=<?= $kitap['kitap_id']; ?>">
+                          <button type="button" class="btn btn-primary">
+                            Görüntüle
+                          </button>
+                        </a> 
+                      </td>                                  
                     </tr>
                   <?php endforeach; ?>                               
                   </tbody>

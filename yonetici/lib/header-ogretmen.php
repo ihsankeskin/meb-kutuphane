@@ -6,7 +6,7 @@
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages2" aria-expanded="true" aria-controls="collapsePages2">
-          <i class="fas fa-fw fa-folder"></i>
+          <i class="fas fa-fw fa-user"></i>
           <span>Öğrenciler</span>
         </a>
         <div id="collapsePages2" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
@@ -22,7 +22,7 @@
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages4" aria-expanded="true" aria-controls="collapsePages4">
-          <i class="fas fa-fw fa-folder"></i>
+          <i class="fas fa-fw fa-book"></i>
           <span>Kitaplar</span>
         </a>
         <div id="collapsePages4" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
@@ -37,6 +37,13 @@
           </div>
         </div>
       </li>
+
+      <li class="nav-item">
+        <a  onClick="yazdir()" class="nav-link collapsed" href="#" data-toggle="collapse"  aria-expanded="true" >
+          <i class="fas fa-fw fa-print "></i>
+          <span>Yazdır</span>
+        </a>
+       </li>
 
       <!-- Divider -->
       <hr class="sidebar-divider">

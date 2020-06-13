@@ -6,7 +6,7 @@ include_once '../../baglan.php';
 
 if(!$_SESSION['kullanici_adi']){
 	#oturum açılmamış ise
-	header('Location:../index.php');
+	header('Location:../403.php');
 	#oturum açılmadan şöyle bir sayfaya gidilmeye çalışılırsa
 	#/proje/yonetici/root/
 	#kötü amaçlı kişiyi def etmek amacıyla yazılmış kod bloğu
@@ -82,6 +82,17 @@ if($_SESSION['kullanici_adi']){
 		case 'kitap-iade-bekleyenler':
 			require_once 'sayfalar/iade-bekleyen-kitaplar.php';
 			break;
+
+		case 'tek-kitap-goruntule':
+			require_once 'sayfalar/tek-kitap-goruntule.php';
+			break;
+		case 'profil':
+			require_once 'sayfalar/profil.php';
+			break;
+
+        case 'tek-ogrenci-goruntule':
+            require_once 'sayfalar/tek-ogr-goruntule.php';
+            break;
 
 		default:
 			# code...

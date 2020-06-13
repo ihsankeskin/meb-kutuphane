@@ -41,6 +41,10 @@
 			require_once 'sayfalar/profil.php';
 		break;
 		
+		case 'ayarlar':
+			require_once 'sayfalar/ayarlar.php';
+		break;
+		
 		default:
 			# code...
 			break;

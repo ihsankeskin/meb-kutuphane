@@ -78,7 +78,7 @@ $onaylanmis_kitaplar = $sorgu -> fetchAll(PDO :: FETCH_ASSOC);
                       <th>Yayın Evi</th>                   
           			  <th>Öğrenci Ad</th>
           			  <th>Öğrenci Soyad</th>
-          			  <th>Tc No</th>
+          			  <th>Ögrenci No</th>
           			  <th>Telefon</th>
           			  <th>Birim Adı</th>
           			  <th>Süre</th>                                        
@@ -91,7 +91,7 @@ $onaylanmis_kitaplar = $sorgu -> fetchAll(PDO :: FETCH_ASSOC);
                       <th>Yayın Evi</th>                   
           			  <th>Öğrenci Ad</th>
           			  <th>Öğrenci Soyad</th>
-          			  <th>Tc No</th>
+          			  <th>Ögrenci No</th>
           			  <th>Telefon</th>
           			  <th>Birim Adı</th>
           			  <th>Süre</th>                                
@@ -103,8 +103,8 @@ $onaylanmis_kitaplar = $sorgu -> fetchAll(PDO :: FETCH_ASSOC);
                       <td> <?= $kitap['k_ISBN_no']; ?> 		</td>
                       <td> <?= $kitap['k_ad']; ?>      		</td>
                       <td> <?= $kitap['k_yayin_evi']; ?> 	</td>
-                      <td> <?= $kitap['o_ad']; ?> 			</td>
-                      <td> <?= $kitap['o_soyad']; ?> 		</td>
+                      <td> <?php $sifrem= $kitap['o_ad']; echo $sifre_cozuldu = openssl_decrypt($sifrem,$encrypt_method, $key, false, $iv); ?> </td>
+                      <td> <?php $sifrem= $kitap['o_soyad']; echo $sifre_cozuldu = openssl_decrypt($sifrem,$encrypt_method, $key, false, $iv); ?></td>
                       <td> <?= $kitap['o_tc']; ?> 			</td>
                       <td> <?= $kitap['o_telefon']; ?> 		</td>
                       <td> <?= $kitap['o_birim_ad']; ?> 	</td>

@@ -84,18 +84,19 @@
                     
                     <?php foreach ($mudurler as $mudur): ?>
                     <tr>
-                      <td><?php echo $mudur['ad']; ?></td>
-                      <td><?php echo $mudur['soyad']; ?></td>
+
+                      <td><?php $sifrem= $mudur['ad']; echo $sifre_cozuldu = openssl_decrypt($sifrem,$encrypt_method, $key, false, $iv); ?></td>
+                      <td><?php $sifrem= $mudur['soyad']; echo $sifre_cozuldu = openssl_decrypt($sifrem,$encrypt_method, $key, false, $iv); ?></td>
                       <td><?php echo $mudur['tcno']; ?></td>
-                      <td><?php echo $mudur['username']; ?></td>
+                      <td><?php $sifrem= $mudur['username']; echo $sifre_cozuldu = openssl_decrypt($sifrem,$encrypt_method, $key, false, $iv); ?></td>
                       <td title="<?php echo $mudur['sifre']; ?>">
                         <details>
                           <summary></summary>
-                          <?php echo $mudur['sifre']; ?>
+                          <?php $sifrem= $mudur['sifre']; echo $sifre_cozuldu = openssl_decrypt($sifrem,$encrypt_method, $key, false, $iv); ?>
                         </details>
                       </td>
                       <td><?php echo $mudur['telefon']; ?></td>
-                      <td><?php echo $mudur['eposta']; ?></td>
+                      <td><?php $sifrem= $mudur['eposta']; echo $sifre_cozuldu = openssl_decrypt($sifrem,$encrypt_method, $key, false, $iv); ?></td>
                       <td><?php echo $mudur['birimadi']; ?></td>                                    
                     </tr>
                     <?php endforeach; ?>   

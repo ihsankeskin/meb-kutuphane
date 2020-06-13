@@ -91,7 +91,7 @@ $ogrenciler = $sorgu -> fetchAll(PDO :: FETCH_ASSOC);
                     <tr class="table-active">
                       <th>İsim</th>
                       <th>Soyisim</th>
-                      <th>Tc No</th>
+                      <th>Ögrenci No</th>
                       <th>Şifre</th>
                       <th>Telefon</th>
                       <th>E-posta</th>
@@ -102,7 +102,7 @@ $ogrenciler = $sorgu -> fetchAll(PDO :: FETCH_ASSOC);
                      <tr class="table-active">
                       <th>İsim</th>
                       <th>Soyisim</th>
-                      <th>Tc No</th>
+                      <th>Ögrenci No</th>
                       <th>Şifre</th>
                       <th>Telefon</th>
                       <th>E-posta</th>
@@ -113,12 +113,12 @@ $ogrenciler = $sorgu -> fetchAll(PDO :: FETCH_ASSOC);
                     
                     <?php foreach ($ogrenciler as $ogrenci): ?>
                     <tr>
-                      <td>	<?php echo $ogrenci['ad']; 		?></td>
-                      <td>	<?php echo $ogrenci['soyad']; 	?></td>
+                      <td>  <?php $adsifrem= $ogrenci['ad']; echo $sifre_cozuldu = openssl_decrypt($adsifrem,$encrypt_method, $key, false, $iv); ?></td>
+                      <td>  <?php $soysifrem= $ogrenci['soyad']; echo $sifre_cozuldu = openssl_decrypt($soysifrem,$encrypt_method, $key, false, $iv); ?></td>
                       <td>	<?php echo $ogrenci['tcno']; 	?></td>
-                      <td>	<?php echo $ogrenci['sifre']; 	?></td>
+                      <td>	<?php $sifrem= $ogrenci['sifre']; echo $sifre_cozuldu = openssl_decrypt($sifrem,$encrypt_method, $key, false, $iv); ?></td>
                       <td>	<?php echo $ogrenci['telefon']; ?></td>
-                      <td>	<?php echo $ogrenci['eposta']; 	?></td>
+                      <td>  <?php $esifrem= $ogrenci['eposta']; echo $sifre_cozuldu = openssl_decrypt($esifrem,$encrypt_method, $key, false, $iv); ?></td>
                       <td>
                         <a href="index.php?sayfa=tek-ogrenci-guncelle&id=<?php echo $ogrenci['id']; ?>">
                           <button type="button" class="btn btn-warning">

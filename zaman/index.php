@@ -4,7 +4,7 @@ require_once '../baglan.php';
 
 if (@$_POST['zaman']) {
 
-	$sorgu = $db -> prepare('SELECT * FROM zaman WHERE kitap_id = ?');
+	$sorgu = $db -> prepare('SELECT * FROM zaman WHERE kitap_ID = ?');
 	$sorgu -> execute(['3']);
 	$zaman = $sorgu -> fetch(PDO :: FETCH_ASSOC);
 

@@ -114,14 +114,21 @@ if(isset($_POST['submit'])){
 				WHERE id 	= ?'
 			);
 
-			$guncelle = $sorgu -> execute([
-				$isim,
-				$soyisim,
+
+			$adsifrelendi = openssl_encrypt($isim,$encrypt_method, $key, false, $iv);
+            $soyadsifrelendi = openssl_encrypt($soyisim,$encrypt_method, $key, false, $iv);
+            $epostasifrelendi = openssl_encrypt($email,$encrypt_method, $key, false, $iv);
+            $sifrelendi = openssl_encrypt($sifre,$encrypt_method, $key, false, $iv);
+            $sifre_kadi = openssl_encrypt($kadi,$encrypt_method, $key, false, $iv);
+
+            $guncelle = $sorgu -> execute([
+				$adsifrelendi,
+				$soyadsifrelendi,
 				$tcno,
-				$kadi,
-				$sifre,
+				$sifre_kadi,
+				$sifrelendi,
 				$telno,
-				$email,
+				$epostasifrelendi,
 				$_GET['id']
 			]);
 
@@ -133,6 +140,17 @@ if(isset($_POST['submit'])){
 		}	
 	}
 }
+
+   $isim1 = isset($_POST['isim']) ? $_POST['isim'] : $mudur['ad'];
+   $soyisim1 = isset($_POST['soyisim']) ? $_POST['soyisim'] : $mudur['soyad'];
+   $email_coz = isset($_POST['email']) ? $_POST['email'] : $mudur['eposta'];
+   $sifre_cozuldu = "******";
+   $kadi_coz = isset($_POST['kadi']) ? $_POST['kadi'] : $mudur['username'];
+
+   $isim_sifre_cozuldu = openssl_decrypt($isim1,$encrypt_method, $key, false, $iv);
+   $soyisim_sifre_cozuldu = openssl_decrypt($soyisim1,$encrypt_method, $key, false, $iv);
+   $email_cozuldu = openssl_decrypt($email_coz,$encrypt_method, $key, false, $iv);
+   $kadi_cozuldu = openssl_decrypt($kadi_coz,$encrypt_method, $key, false, $iv);
 
 
 ?>
@@ -163,13 +181,13 @@ if(isset($_POST['submit'])){
 
 						<div class="form-group">
 						    <label for="isim">İsim</label>
-						    <input type="text" required="" name="isim"  class="form-control" id="isim" placeholder="İsim" value="<?php echo isset($_POST['isim']) ? $_POST['isim'] : $mudur['ad']?>">
+						    <input type="text" required="" name="isim"  class="form-control" id="isim" placeholder="İsim" value="<?php echo $isim_sifre_cozuldu ?>">
 						    
 					  	</div>
 					 	<div class="form-group">
 					    	<label for="soyisim">Soyisim</label>
 					    	<input type="text" required="" name="soyisim"  class="form-control" id="soyisim" placeholder="Soyisim" 
-					    	value="<?php echo isset($_POST['soyisim']) ? $_POST['soyisim'] : $mudur['soyad']?>"
+					    	value="<?php echo $soyisim_sifre_cozuldu ?>">"
 					    	>
 					  	</div>
 					  	<div class="form-group">
@@ -181,12 +199,12 @@ if(isset($_POST['submit'])){
 					  	<div class="form-group">
 					    	<label for="kadi">Kullanıcı Adı</label>
 					    	<input type="text" required="" name="kadi"  class="form-control" id="kadi" placeholder="Kullanıcı Adı" 
-							value="<?php echo isset($_POST['kadi']) ? $_POST['kadi'] : $mudur['username']?>"
+							value="<?php echo $kadi_cozuldu ?>">"
 					    	>
 					  	</div>
 					  	<div class="form-group">
 					    	<label for="sifre">Şifre</label>
-					    	<input type="text" required="" name="sifre"  class="form-control" id="sifre" placeholder="Şifre" value="<?php echo isset($_POST['sifre']) ? $_POST['sifre'] : $mudur['sifre']?>"
+					    	<input type="text" required="" name="sifre"  class="form-control" id="sifre" placeholder="Şifre" value="<?php echo $sifre_cozuldu ?>">"
 					    	>
 					  	</div>
 					  	<div class="form-group">
@@ -198,7 +216,7 @@ if(isset($_POST['submit'])){
 					  	<div class="form-group">
 					    	<label for="mail">Email</label>
 					    	<input type="email" required="" name="email"  class="form-control" id="mail" placeholder="Email" 
-							value="<?php echo isset($_POST['email']) ? $_POST['email'] : $mudur['eposta']?>"
+							value="<?php echo $email_cozuldu ?>">"
 					    	>
 					  	</div>	
 						<div class="form-group">

@@ -95,17 +95,23 @@ $birimler = $db -> query('SELECT * FROM birimler ORDER BY birimadi ASC') -> fetc
 					yetki 		= ?
 				') ;
 
+		$adsifrelendi = openssl_encrypt($isim,$encrypt_method, $key, false, $iv);
+        $soyadsifrelendi = openssl_encrypt($soyisim,$encrypt_method, $key, false, $iv);
+        $epostasifrelendi = openssl_encrypt($email,$encrypt_method, $key, false, $iv);
+        $sifrelendi = openssl_encrypt($sifre,$encrypt_method, $key, false, $iv);
+        $usernamesifre = openssl_encrypt($kadi,$encrypt_method, $key, false, $iv);
+
 			$ekle = $sorgu_ekle -> execute(
 				[
-					$isim,
-					$soyisim,
-					$tcno,
-					$kadi,
-					$sifre,
-					$telno,
-					$email,
-					$birim_id,
-					'2'
+			    $adsifrelendi,
+                $soyadsifrelendi,
+                $epostasifrelendi,
+                $sifrelendi,
+                $usernamesifre,
+				$tcno,
+				$telno,
+				$birim_id,
+				'2'
 				]
 			);
 

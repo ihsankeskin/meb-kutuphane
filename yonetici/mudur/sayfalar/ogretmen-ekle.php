@@ -89,19 +89,26 @@ if(isset($_POST['submit'])){
 				yetki 		= ?
 		') ;
 
-		$ekle = $sorgu_ekle -> execute(
-			[
-				$isim,
-				$soyisim,
+
+		$adsifrelendi = openssl_encrypt($isim,$encrypt_method, $key, false, $iv);
+        $soyadsifrelendi = openssl_encrypt($soyisim,$encrypt_method, $key, false, $iv);
+        $epostasifrelendi = openssl_encrypt($email,$encrypt_method, $key, false, $iv);
+        $sifrelendi = openssl_encrypt($sifre,$encrypt_method, $key, false, $iv);
+        $usernamesifre = openssl_encrypt($kadi,$encrypt_method, $key, false, $iv);
+
+			$ekle = $sorgu_ekle -> execute(
+				[
+			    $adsifrelendi,
+                $soyadsifrelendi,
+                $epostasifrelendi,
+                $sifrelendi,
+                $usernamesifre,
 				$tcno,
-				$kadi,
-				$sifre,
 				$telno,
-				$email,
 				$birim_id,
-				'3'
-			]
-		);
+				'2'
+				]
+			);
 
 		if($ekle){
 				// başarıyla eklenmişse

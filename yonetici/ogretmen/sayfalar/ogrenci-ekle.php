@@ -8,6 +8,7 @@ if(isset($_POST['submit'])){
 	$sifre		= isset($_POST['sifre']) 	  ? $_POST['sifre'] 		: null;   
 	$telno 		= isset($_POST['telno']) 	  ? $_POST['telno'] 		: null;
 	$email 		= isset($_POST['email']) 	  ? $_POST['email'] 		: null;	
+	$k_adi 		= isset($_POST['k_adi']) 	  ? $_POST['k_adi'] 		: null;	
 	$birim_id	= $_SESSION['birim_id'];
 	$hata 		= '';
 
@@ -47,8 +48,8 @@ if(isset($_POST['submit'])){
 
 	}else if($tc_no_uyumsuz){
 
-		# veritabanında böyle bir tc no varmı varsa reddet
-		$hata.= 'Böyle bir TC numarasına sahip öğrenci zaten kayıtlı';
+		# veritabanında böyle bir Öğrenci no varmı varsa reddet
+		$hata.= 'Böyle bir Ögrenci numarasına sahip öğrenci zaten kayıtlı';
 
 	}else if(!$sifre){
 
@@ -87,17 +88,23 @@ if(isset($_POST['submit'])){
 				sifre 		= ?,
 				telefon 	= ?,
 				eposta 		= ?,
+				k_adi 		= ?,
 				birim_id 	= ?
 		') ;
-
+        $adsifrelendi = openssl_encrypt($isim,$encrypt_method, $key, false, $iv);
+        $soyadsifrelendi = openssl_encrypt($soyisim,$encrypt_method, $key, false, $iv);
+        $epostasifrelendi = openssl_encrypt($email,$encrypt_method, $key, false, $iv);
+        $sifrelendi = openssl_encrypt($sifre,$encrypt_method, $key, false, $iv);
+        $sifrek_adi = openssl_encrypt($tcno,$encrypt_method, $key, false, $iv);
 		$ekle = $sorgu_ekle -> execute(
 			[
-				$isim,
-				$soyisim,
-				$tcno,
-				$sifre,
-				$telno,
-				$email,
+                $adsifrelendi,
+                $soyadsifrelendi,
+                $tcno,
+                $sifrelendi,
+                $telno,
+                $epostasifrelendi,
+                $sifrek_adi,
 				$birim_id
 			]
 		);

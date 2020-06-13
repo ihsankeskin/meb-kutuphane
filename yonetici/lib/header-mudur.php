@@ -55,5 +55,27 @@
       </li>
 
 
+<li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages6" aria-expanded="true" aria-controls="collapsePages6">
+        <i class="fas fa-fw fa-folder"></i>
+        <span>Raporlar</span>
+    </a>
+    <div id="collapsePages6" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">İşlemler:</h6>
+            <a class="collapse-item" href="../mudur/index.php?sayfa=kitap_rapor">Kitap İstatistikleri</a>
+            <a class="collapse-item" href="../mudur/index.php?sayfa=kullanici_rapor">Kullanıcı İstatistikleri</a>
+            <a class="collapse-item" href="../mudur/index.php?sayfa=rapor_kutuphane">Kütüphane İstatistikleri</a>
+        </div>
+    </div>
+</li>
+      <li class="nav-item">
+        <a  onClick="yazdir()" class="nav-link collapsed" href="#" data-toggle="collapse"  aria-expanded="true" >
+          <i class="fas fa-fw fa-print "></i>
+          <span>Yazdır</span>
+        </a>
+       </li>
+
+
       <!-- Divider -->
       <hr class="sidebar-divider">
